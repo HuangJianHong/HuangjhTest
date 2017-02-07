@@ -1,0 +1,140 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'android-apt'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "25.0.2"
+    def currentVersionCode = getVersionCode()
+    def currentVersionName = getVersionName()
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "hjhtest.com.cncn.www.huangjhtest"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode  currentVersionCode
+        versionName  currentVersionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi', 'x86', 'armeabi-v7a'
+        }
+
+        //dex突破65535的限制
+        multiDexEnabled true
+    }
+
+
+    buildTypes {
+        debug {
+            buildConfigField "String", "HOST_URL", TEST_URL
+            //显示log
+            buildConfigField("boolean", "DEBUG_LOG", "true")
+            versionNameSuffix "-debug"
+            //是否使用代码混淆
+            minifyEnabled false
+            zipAlignEnabled false
+            //移除无用的resource文件
+            shrinkResources false
+//            signingConfig signingConfigs.debug
+        }
+        release {
+            buildConfigField("String", "HOST_URL", HOST_URL)
+            // 不显示Log
+            buildConfigField("boolean", "DEBUG_LOG", "false")
+            //是否使用代码混淆
+            minifyEnabled false
+            zipAlignEnabled false
+            // 移除无用的resource文件
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release
+            //修改生成的apk名字，格式为 app名_版本号_打包时间_渠道名_release.apk
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def oldFile = output.outputFile
+                    if (variant.buildType.name.equals('release')) {
+                        def releaseApkName = getProductName() + "_v${defaultConfig.versionName}_${releaseTime()}_" + variant.productFlavors[0].name + '_release.apk'
+                        output.outputFile = new File(oldFile.parent, releaseApkName)
+                    } else if (variant.buildType.name.equals('debug')) {
+                        def debugApkName = getProductName() + "_v${defaultConfig.versionName}_${releaseTime()}_" + variant.productFlavors[0].name + '_debug.apk'
+                        output.outputFile = new File(oldFile.parent, debugApkName)
+                    }
+                }
+            }
+        }
+    }
+
+    //自动多渠道打包
+    productFlavors {
+        cncn{}
+    }
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL: name]
+    }
+}
+
+    // 读取版本号
+    def getVersionCode() {
+        def versionFile = file('version.properties')
+        if (versionFile.canRead()) {
+            def Properties versionProps = new Properties()
+            versionProps.load(new FileInputStream(versionFile))
+            def versionCode = versionProps['VERSION_CODE'].toInteger()
+            def runTasks = gradle.startParameter.taskNames
+            if ('assembleRelease' in runTasks) {
+                versionProps['VERSION_CODE'] = (++versionCode).toString()
+                versionProps.store(versionFile.newWriter(), null)
+            }
+            return versionCode
+        } else {
+            throw new GradleException("Could not find version.properties!")
+        }
+    }
+
+// 读取版本名
+    def getVersionName() {
+        def versionFile = file('version.properties')
+        if (versionFile.canRead()) {
+            def Properties versionProps = new Properties()
+            versionProps.load(new FileInputStream(versionFile))
+            def versionName = versionProps['VERSION_NAME']
+            return versionName
+        } else {
+            throw new GradleException("Could not find version.properties!")
+        }
+    }
+
+
+// 获取程序名称
+def getProductName() {
+    return "HuangjhTest"
+}
+// 获取当前系统时间
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    testCompile 'junit:junit:4.12'
+    compile project(':cncnlib')
+    compile project(':autolayout')
+
+    dependencies {
+        compile 'com.taobao.android:alisdk-hotfix:1.4.0'
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "utf-8"
+}
