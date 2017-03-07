@@ -1,4 +1,4 @@
-package hjhtest.com.cncn.www.huangjhtest.view;
+package hjhtest.com.cncn.www.huangjhtest.customerview;
 
 /**
  * Created by T048 on 2016/3/29.

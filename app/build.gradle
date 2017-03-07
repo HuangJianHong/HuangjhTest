@@ -16,8 +16,8 @@ android {
         applicationId "hjhtest.com.cncn.www.huangjhtest"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode  currentVersionCode
-        versionName  currentVersionName
+        versionCode currentVersionCode
+        versionName currentVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -72,44 +72,43 @@ android {
 
     //自动多渠道打包
     productFlavors {
-        cncn{}
+        cncn {}
     }
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL: name]
     }
 }
 
-    // 读取版本号
-    def getVersionCode() {
-        def versionFile = file('version.properties')
-        if (versionFile.canRead()) {
-            def Properties versionProps = new Properties()
-            versionProps.load(new FileInputStream(versionFile))
-            def versionCode = versionProps['VERSION_CODE'].toInteger()
-            def runTasks = gradle.startParameter.taskNames
-            if ('assembleRelease' in runTasks) {
-                versionProps['VERSION_CODE'] = (++versionCode).toString()
-                versionProps.store(versionFile.newWriter(), null)
-            }
-            return versionCode
-        } else {
-            throw new GradleException("Could not find version.properties!")
+// 读取版本号
+def getVersionCode() {
+    def versionFile = file('version.properties')
+    if (versionFile.canRead()) {
+        def Properties versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionFile))
+        def versionCode = versionProps['VERSION_CODE'].toInteger()
+        def runTasks = gradle.startParameter.taskNames
+        if ('assembleRelease' in runTasks) {
+            versionProps['VERSION_CODE'] = (++versionCode).toString()
+            versionProps.store(versionFile.newWriter(), null)
         }
+        return versionCode
+    } else {
+        throw new GradleException("Could not find version.properties!")
     }
+}
 
 // 读取版本名
-    def getVersionName() {
-        def versionFile = file('version.properties')
-        if (versionFile.canRead()) {
-            def Properties versionProps = new Properties()
-            versionProps.load(new FileInputStream(versionFile))
-            def versionName = versionProps['VERSION_NAME']
-            return versionName
-        } else {
-            throw new GradleException("Could not find version.properties!")
-        }
+def getVersionName() {
+    def versionFile = file('version.properties')
+    if (versionFile.canRead()) {
+        def Properties versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionFile))
+        def versionName = versionProps['VERSION_NAME']
+        return versionName
+    } else {
+        throw new GradleException("Could not find version.properties!")
     }
-
+}
 
 // 获取程序名称
 def getProductName() {
@@ -129,10 +128,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':cncnlib')
     compile project(':autolayout')
-
-    dependencies {
-        compile 'com.taobao.android:alisdk-hotfix:1.4.0'
-    }
 }
 
 tasks.withType(JavaCompile) {
