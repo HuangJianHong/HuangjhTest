@@ -128,6 +128,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':cncnlib')
     compile project(':autolayout')
+
+     //Dagger2
+    apt 'com.google.dagger:dagger-compiler:2.6'
+    compile 'com.google.dagger:dagger:2.6'
 }
 
 tasks.withType(JavaCompile) {
