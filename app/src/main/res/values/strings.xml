@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HuangjhTest</string>
+    <string name="title_activity_a">AActivity</string>
 </resources>

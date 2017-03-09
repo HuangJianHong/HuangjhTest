@@ -3,6 +3,7 @@ package hjhtest.com.cncn.www.huangjhtest.dagger.module;
 import dagger.Module;
 import dagger.Provides;
 import hjhtest.com.cncn.www.huangjhtest.dagger.Poetry;
+import hjhtest.com.cncn.www.huangjhtest.dagger.PoetryScope;
 
 /**
  * Created by T163 on 2017/3/9.
@@ -17,6 +18,7 @@ public class PoetryModule {
      * @param poems
      * @return
      */
+    @PoetryScope
     @Provides
     public Poetry providesPoetry(String poems){
         return new Poetry(poems);

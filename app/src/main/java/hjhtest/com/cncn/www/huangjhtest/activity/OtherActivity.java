@@ -14,8 +14,7 @@ import hjhtest.com.cncn.www.huangjhtest.R;
 import hjhtest.com.cncn.www.huangjhtest.dagger.Poetry;
 import hjhtest.com.cncn.www.huangjhtest.dagger.component.MainComponent;
 
-
-public class MainActivity extends AppCompatActivity {
+public class OtherActivity extends AppCompatActivity {
 
     @Inject
     Poetry mPoetry;
@@ -23,13 +22,17 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     Gson mGson;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_other);
 
         MainComponent.getInstance().inject(this);
+        initView();
+    }
 
+    private void initView() {
         TextView tvTest = (TextView) findViewById(R.id.tvTest);
         String json = mGson.toJson(mPoetry);
         String text =json +", mPoetry: " + mPoetry;
@@ -38,9 +41,10 @@ public class MainActivity extends AppCompatActivity {
         tvTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, OtherActivity.class));
+                startActivity(new Intent(OtherActivity.this, AActivity.class));
             }
         });
     }
+
 
 }
