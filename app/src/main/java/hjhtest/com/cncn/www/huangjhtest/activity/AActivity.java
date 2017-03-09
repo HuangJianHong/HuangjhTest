@@ -12,14 +12,20 @@ import javax.inject.Inject;
 import hjhtest.com.cncn.www.huangjhtest.R;
 import hjhtest.com.cncn.www.huangjhtest.app.MainApplication;
 import hjhtest.com.cncn.www.huangjhtest.dagger.Poetry;
+import hjhtest.com.cncn.www.huangjhtest.dagger.qualifier.PoetryQualifier;
 
 public class AActivity extends AppCompatActivity {
 
     @Inject
     Gson mGson;
 
+    @PoetryQualifier("A")
     @Inject
     Poetry mPoetry;
+
+    @PoetryQualifier("B")
+    @Inject
+    Poetry mPoetryB;
 
 
 
@@ -30,13 +36,12 @@ public class AActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         MainApplication.getInstance().getAcomponent().inject(this);
 
-
-
         TextView tvTest = (TextView) findViewById(R.id.tvTest);
-        String text = mPoetry.getPemo()+",mPoetry:"+mPoetry+(mGson == null ? "Gson没被注入" : "Gson已经被注入");
+        String text = mPoetry.getPemo()+ " mPoetryA: " + mPoetry + mPoetryB.getPemo() +",mPoetryB: "+ mPoetryB
+                +(mGson == null ? "Gson没被注入" : "Gson已经被注入");
+
         tvTest.setText(text);
     }
 
