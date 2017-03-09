@@ -14,6 +14,10 @@ public class Poetry {
         mPemo ="生活就像海洋";
     }
 
+    public Poetry(String str){
+        mPemo = str;
+    }
+
     public String getPemo(){
         return  mPemo;
     }
