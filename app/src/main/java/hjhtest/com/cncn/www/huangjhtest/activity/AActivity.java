@@ -1,5 +1,6 @@
 package hjhtest.com.cncn.www.huangjhtest.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -43,6 +44,8 @@ public class AActivity extends AppCompatActivity {
                 +(mGson == null ? "Gson没被注入" : "Gson已经被注入");
 
         tvTest.setText(text);
+
+        tvTest.setOnClickListener(v -> startActivity(new Intent(AActivity.this, BActivity.class )));
     }
 
 }
