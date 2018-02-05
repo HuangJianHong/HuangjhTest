@@ -1,6 +1,8 @@
 package hjhtest.com.cncn.www.huangjhtest.greendao.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by  Hjh on 2018/2/5.
@@ -10,20 +12,37 @@ import org.greenrobot.greendao.annotation.Entity;
 @Entity
 public class UserBean {
 
+    @Id(autoincrement = true)
+    private long id;
+
     private String userId;
 
     private String userName;
 
     private int age;
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public UserBean(String userId, String userName, int age) {
+    @Generated(hash = 1909475708)
+    public UserBean(long id, String userId, String userName, int age) {
+        this.id = id;
         this.userId = userId;
         this.userName = userName;
         this.age = age;
+    }
+
+    @Generated(hash = 1203313951)
+    public UserBean() {
+    }
+
+    public long getId() {
+        return this.id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return this.userId;
     }
 
     public void setUserId(String userId) {
@@ -31,7 +50,7 @@ public class UserBean {
     }
 
     public String getUserName() {
-        return userName;
+        return this.userName;
     }
 
     public void setUserName(String userName) {
@@ -39,13 +58,12 @@ public class UserBean {
     }
 
     public int getAge() {
-        return age;
+        return this.age;
     }
 
     public void setAge(int age) {
         this.age = age;
     }
-
 
 
 
