@@ -2,11 +2,13 @@ package hjhtest.com.cncn.www.huangjhtest.app;
 
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
+
 import hjhtest.com.cncn.www.huangjhtest.dagger.component.AComponent;
 import hjhtest.com.cncn.www.huangjhtest.dagger.component.ApplicationComponent;
 import hjhtest.com.cncn.www.huangjhtest.dagger.component.DaggerApplicationComponent;
 import hjhtest.com.cncn.www.huangjhtest.dagger.module.AModule;
-import hjhtest.com.cncn.www.huangjhtest.greendao.GreenDaoManager;
+import hjhtest.com.cncn.www.huangjhtest.greendao.dbhelper.GreenDaoManager;
 
 /**
  * Date:16/5/17
@@ -33,6 +35,8 @@ public class MainApplication extends Application {
 
         //greenDao初始化
         GreenDaoManager.init(this);
+        //在线查看啊数据库内部存储的数据
+        Stetho.initializeWithDefaults(this);
     }
 
 

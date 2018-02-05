@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import hjhtest.com.cncn.www.huangjhtest.R;
 import hjhtest.com.cncn.www.huangjhtest.dagger.Poetry;
 import hjhtest.com.cncn.www.huangjhtest.dagger.component.MainComponent;
+import hjhtest.com.cncn.www.huangjhtest.greendao.GreenDaoActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, OtherActivity.class));
             }
         });
+
+
+        findViewById(R.id.button_dao).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, GreenDaoActivity.class)));
     }
 
 }
