@@ -19,6 +19,7 @@ public class User {
 
     private int age;
 
+    //以下内如, 编译的时候，会自动生成，包括构造方法，get/set方法
     @Generated(hash = 1334185703)
     public User(long id, String userId, String userName, int age) {
         this.id = id;

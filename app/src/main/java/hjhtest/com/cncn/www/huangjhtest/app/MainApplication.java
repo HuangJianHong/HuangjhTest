@@ -8,7 +8,7 @@ import hjhtest.com.cncn.www.huangjhtest.dagger.component.AComponent;
 import hjhtest.com.cncn.www.huangjhtest.dagger.component.ApplicationComponent;
 import hjhtest.com.cncn.www.huangjhtest.dagger.component.DaggerApplicationComponent;
 import hjhtest.com.cncn.www.huangjhtest.dagger.module.AModule;
-import hjhtest.com.cncn.www.huangjhtest.greendao.dbhelper.GreenDaoManager;
+import hjhtest.com.cncn.www.huangjhtest.greendao.db.helper.GreenDaoManager;
 
 /**
  * Date:16/5/17

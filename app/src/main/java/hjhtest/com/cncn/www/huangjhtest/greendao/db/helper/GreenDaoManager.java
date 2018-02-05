@@ -1,4 +1,4 @@
-package hjhtest.com.cncn.www.huangjhtest.greendao.dbhelper;
+package hjhtest.com.cncn.www.huangjhtest.greendao.db.helper;
 
 import android.content.Context;
 
