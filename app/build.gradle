@@ -1,10 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'android-apt'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.0"
     def currentVersionCode = getVersionCode()
     def currentVersionName = getVersionName()
     compileOptions {
@@ -24,10 +25,16 @@ android {
             //设置支持的SO库架构
             abiFilters 'armeabi', 'x86', 'armeabi-v7a'
         }
-
         //dex突破65535的限制
         multiDexEnabled true
     }
+
+    greendao {
+        schemaVersion 1                                            //数据库版本号
+        daoPackage 'hjhtest.com.cncn.www.huangjhtest.greendao.db'  // 设置DaoMaster、DaoSession、Dao 包名
+        targetGenDir 'src/main/java'                                //设置DaoMaster、DaoSession、Dao目录
+    }
+
 
 
     buildTypes {
@@ -134,6 +141,9 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
     apt 'com.google.dagger:dagger-compiler:2.6'
+
+    //greenDao
+    compile 'org.greenrobot:greendao:3.2.2' // add library
 }
 
 tasks.withType(JavaCompile) {

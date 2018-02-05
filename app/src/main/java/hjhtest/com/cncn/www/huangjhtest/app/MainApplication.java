@@ -6,9 +6,9 @@ import hjhtest.com.cncn.www.huangjhtest.dagger.component.AComponent;
 import hjhtest.com.cncn.www.huangjhtest.dagger.component.ApplicationComponent;
 import hjhtest.com.cncn.www.huangjhtest.dagger.component.DaggerApplicationComponent;
 import hjhtest.com.cncn.www.huangjhtest.dagger.module.AModule;
+import hjhtest.com.cncn.www.huangjhtest.greendao.GreenDaoManager;
 
 /**
- * User: xingzhi.wap
  * Date:16/5/17
  */
 public class MainApplication extends Application {
@@ -16,11 +16,11 @@ public class MainApplication extends Application {
     public static String appId;
 
     private ApplicationComponent mApplicationComponent;
-    private static MainApplication  sApplication;
+    private static MainApplication sApplication;
     private static AComponent mAComponent;
 
-    public static MainApplication getInstance(){
-        return  sApplication;
+    public static MainApplication getInstance() {
+        return sApplication;
     }
 
 
@@ -30,17 +30,20 @@ public class MainApplication extends Application {
         sApplication = this;
 
         mApplicationComponent = DaggerApplicationComponent.builder().build();
+
+        //greenDao初始化
+        GreenDaoManager.init(this);
     }
 
-    public ApplicationComponent getApplicationComponent(){
+
+    public ApplicationComponent getApplicationComponent() {
         return mApplicationComponent;
     }
 
-    public AComponent getAcomponent(){
-        if (mAComponent == null){
+    public AComponent getAcomponent() {
+        if (mAComponent == null) {
             mAComponent = mApplicationComponent.plus(new AModule());
         }
-        return  mAComponent;
+        return mAComponent;
     }
-
 }
