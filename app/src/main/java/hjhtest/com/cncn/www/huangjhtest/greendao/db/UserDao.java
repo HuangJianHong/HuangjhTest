@@ -44,7 +44,7 @@ public class UserDao extends AbstractDao<User, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"USER_ID\" TEXT UNIQUE ," + // 1: userId
+                "\"USER_ID\" TEXT," + // 1: userId
                 "\"USER_NAME\" TEXT," + // 2: userName
                 "\"AGE\" INTEGER NOT NULL );"); // 3: age
     }

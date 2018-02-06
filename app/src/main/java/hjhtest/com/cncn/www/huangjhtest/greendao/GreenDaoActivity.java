@@ -83,8 +83,8 @@ public class GreenDaoActivity extends AppCompatActivity implements View.OnClickL
         User hua = new User(null, xiaohua.getUserId(), xiaohua.getUserName(), xiaohua.getAge());
         User hong = new User(null, xiaohong.getUserId(), xiaohong.getUserName(), xiaohong.getAge());
 
-        UserManager.insertOrRepalce(ming);
-        UserManager.insertOrRepalce(hua);
-        UserManager.insertOrRepalce(hong);
+        UserManager.insertOrReplace(ming);
+        UserManager.insertOrReplace(hua);
+        UserManager.rxInsert(hong);
     }
 }

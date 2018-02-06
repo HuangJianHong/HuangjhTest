@@ -1,26 +1,25 @@
 package hjhtest.com.cncn.www.huangjhtest.greendao.db.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Unique;
+import org.greenrobot.greendao.annotation.Id;
 
 /**
  * Created by  Hjh on 2018/2/5.
- * desc：
+ * desc： 数据库实体表
  */
 @Entity
 public class User {
     @Id(autoincrement = true)
     private Long id;
 
-    @Unique
     private String userId;
 
     private String userName;
 
     private int age;
 
+    //以下内容会自动生成
     @Generated(hash = 1975221261)
     public User(Long id, String userId, String userName, int age) {
         this.id = id;

@@ -1,15 +1,19 @@
 package hjhtest.com.cncn.www.huangjhtest.greendao.db.helper;
 
+import android.util.Log;
+
 import org.greenrobot.greendao.query.QueryBuilder;
+import org.greenrobot.greendao.rx.RxDao;
 
 import java.util.List;
 
 import hjhtest.com.cncn.www.huangjhtest.greendao.db.UserDao;
 import hjhtest.com.cncn.www.huangjhtest.greendao.db.entity.User;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by  Hjh on 2018/2/6.
- * desc：
+ * desc：UserDao数据操作工具
  */
 
 public class UserManager {
@@ -24,7 +28,7 @@ public class UserManager {
         GreenDaoManager.getInstance().getSession().getUserDao().insert(user);
     }
 
-    public static void insertOrRepalce(User user) {
+    public static void insertOrReplace(User user) {
         GreenDaoManager.getInstance().getSession().getUserDao().insertOrReplace(user);
     }
 
@@ -61,15 +65,20 @@ public class UserManager {
     }
 
     //查询年龄大于等于10的用户
-    public static  List<User> queryAge10() {
+    public static List<User> queryAge10() {
         UserDao userDao = GreenDaoManager.getInstance().getSession().getUserDao();
         return userDao.queryRaw("where AGE >= ?", "10");
     }
 
-    public static  List<User> queryUserId(String userId) {
+    public static List<User> queryUserId(String userId) {
         QueryBuilder<User> builder = GreenDaoManager.getInstance().getSession().getUserDao().queryBuilder();
-        return  builder.where(UserDao.Properties.UserId.eq(userId)).build().list();
+        return builder.where(UserDao.Properties.UserId.eq(userId)).build().list();
     }
 
+    //RxDao
+    public static void rxInsert(User user) {
+        RxDao userDao = GreenDaoManager.getInstance().getSession().getUserDao().rx();
+        userDao.insert(user).observeOn(AndroidSchedulers.mainThread()).subscribe(o -> Log.i("RxDao", "insert success"));
+    }
 
 }
