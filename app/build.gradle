@@ -4,6 +4,14 @@ apply plugin: 'android-apt'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
+    signingConfigs {
+        config {
+            storeFile file(STORE_FILE)
+            storePassword STORE_PASSWORD
+            keyAlias KEYALIAS
+            keyPassword KEYPASSWORD
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     def currentVersionCode = getVersionCode()
@@ -12,7 +20,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     defaultConfig {
         applicationId "hjhtest.com.cncn.www.huangjhtest"
         minSdkVersion 19
@@ -28,15 +35,11 @@ android {
         //dex突破65535的限制
         multiDexEnabled true
     }
-
     greendao {
         schemaVersion 1                                            //数据库版本号
         daoPackage 'hjhtest.com.cncn.www.huangjhtest.greendao.db'  // 设置DaoMaster、DaoSession、Dao 包名
         targetGenDir 'src/main/java'                                //设置DaoMaster、DaoSession、Dao目录
     }
-
-
-
     buildTypes {
         debug {
             buildConfigField "String", "HOST_URL", TEST_URL
@@ -60,7 +63,7 @@ android {
             // 移除无用的resource文件
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.config
             //修改生成的apk名字，格式为 app名_版本号_打包时间_渠道名_release.apk
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
@@ -76,7 +79,6 @@ android {
             }
         }
     }
-
     //自动多渠道打包
     productFlavors {
         cncn {}
@@ -134,18 +136,18 @@ dependencies {
     })
     compile project(':cncnlib')
     compile project(':autolayout')
-
     //Dagger2
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.google.dagger:dagger:2.6'
     compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
     apt 'com.google.dagger:dagger-compiler:2.6'
-
     //greenDao
-    compile 'org.greenrobot:greendao:3.2.2' // add library
+    compile 'org.greenrobot:greendao:3.2.2'
+    // add library
     //stetho 数据库查看
     compile 'com.facebook.stetho:stetho:1.5.0'
+
 }
 
 tasks.withType(JavaCompile) {
