@@ -45,11 +45,11 @@ public class GreenDaoActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.button3:  //改
-
+                update("102");
                 break;
 
-            case R.id.button4:  //查找年龄大于10
-                List<User> users = UserManager.queryCondition();
+            case R.id.button4:  //查找全部
+                List<User> users = UserManager.queryAll();
                 for (int i = 0; i < users.size(); i++) {
                     tvQuery.append(users.get(i).toString());
                 }
@@ -74,17 +74,40 @@ public class GreenDaoActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    private void update(String id) {
+        if (UserManager.queryUserIdOne(id) != null) {
+            User hong = new User(UserManager.queryUserIdOne(id).getId(), "103", "小红", 18);
+            UserManager.update(hong);
+        }
+    }
+
     private void add() {
-        UserBean xiaoming = new UserBean( "100", "小明", 10);
-        UserBean xiaohua = new UserBean( "101", "小花", 8);
+        UserBean xiaoming = new UserBean("100", "小明", 10);
+        UserBean xiaohua = new UserBean("101", "小花", 8);
         UserBean xiaohong = new UserBean("102", "小红", 15);
 
-        User ming = new User(null, xiaoming.getUserId(), xiaoming.getUserName(), xiaoming.getAge());
-        User hua = new User(null, xiaohua.getUserId(), xiaohua.getUserName(), xiaohua.getAge());
-        User hong = new User(null, xiaohong.getUserId(), xiaohong.getUserName(), xiaohong.getAge());
+        if (UserManager.queryUserIdOne("100") != null) {
+            User ming = new User(UserManager.queryUserIdOne("100").getId(), xiaoming.getUserId(), xiaoming.getUserName(), xiaoming.getAge());
+            UserManager.insertOrReplace(ming);
+        }else {
+            User ming = new User(null, xiaoming.getUserId(), xiaoming.getUserName(), xiaoming.getAge());
+            UserManager.insert(ming);
+        }
 
-        UserManager.insertOrReplace(ming);
-        UserManager.insertOrReplace(hua);
-        UserManager.rxInsert(hong);
+        if (UserManager.queryUserIdOne("101") != null) {
+            User hua = new User(UserManager.queryUserIdOne("101").getId(), xiaohua.getUserId(), xiaohua.getUserName(), xiaohua.getAge());
+            UserManager.insertOrReplace(hua);
+        }else {
+            User hua = new User(null, xiaohua.getUserId(), xiaohua.getUserName(), xiaohua.getAge());
+            UserManager.insertOrReplace(hua);
+        }
+
+        if (UserManager.queryUserIdOne("102") != null) {
+            User hong = new User(UserManager.queryUserIdOne("102").getId(), xiaohong.getUserId(), xiaohong.getUserName(), xiaohong.getAge());
+            UserManager.update(hong);
+        }else {
+            User hong = new User(null, xiaohong.getUserId(), xiaohong.getUserName(), xiaohong.getAge());
+            UserManager.insert(hong);
+        }
     }
 }

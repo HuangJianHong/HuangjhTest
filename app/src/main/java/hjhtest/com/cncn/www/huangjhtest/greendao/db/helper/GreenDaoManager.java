@@ -14,7 +14,7 @@ public class GreenDaoManager {
     private static DaoMaster mDaoMaster;
     private static DaoSession mDaoSession;
     private static volatile GreenDaoManager mInstance = null;
-    private static final String DB_NAME = "test03.db";
+    private static final String DB_NAME = "test05.db";
 
     private GreenDaoManager() {
     }
