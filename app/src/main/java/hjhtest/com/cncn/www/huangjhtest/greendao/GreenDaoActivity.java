@@ -28,6 +28,7 @@ public class GreenDaoActivity extends AppCompatActivity implements View.OnClickL
         findViewById(R.id.button5).setOnClickListener(this);
         findViewById(R.id.button6).setOnClickListener(this);
         findViewById(R.id.button7).setOnClickListener(this);
+        findViewById(R.id.button9).setOnClickListener(this);
 
         tvQuery = (TextView) findViewById(R.id.tvQuery);
     }
@@ -70,13 +71,28 @@ public class GreenDaoActivity extends AppCompatActivity implements View.OnClickL
             case R.id.button7:
                 tvQuery.setText("");
                 break;
+
+            case R.id.button9:
+                upgrade();
+                break;
         }
 
     }
 
+    private void upgrade() {
+        User user = UserManager.queryUserIdOne("100");
+        if (user != null){
+            User xiaoming = new User(user.getId(), "100", "xiaoming", 10, 80);
+            UserManager.update(xiaoming);
+        }else {
+            User xiaoming = new User(null, "100", "xiaoming", 10, 80);
+            UserManager.insertOrReplace(xiaoming);
+        }
+    }
+
     private void update(String id) {
         if (UserManager.queryUserIdOne(id) != null) {
-            User hong = new User(UserManager.queryUserIdOne(id).getId(), "103", "小红", 18);
+            User hong = new User(UserManager.queryUserIdOne(id).getId(), "103", "小红", 18, 60);
             UserManager.update(hong);
         }
     }
@@ -87,26 +103,26 @@ public class GreenDaoActivity extends AppCompatActivity implements View.OnClickL
         UserBean xiaohong = new UserBean("102", "小红", 15);
 
         if (UserManager.queryUserIdOne("100") != null) {
-            User ming = new User(UserManager.queryUserIdOne("100").getId(), xiaoming.getUserId(), xiaoming.getUserName(), xiaoming.getAge());
+            User ming = new User(UserManager.queryUserIdOne("100").getId(), xiaoming.getUserId(), xiaoming.getUserName(), xiaoming.getAge(), 60);
             UserManager.insertOrReplace(ming);
         }else {
-            User ming = new User(null, xiaoming.getUserId(), xiaoming.getUserName(), xiaoming.getAge());
+            User ming = new User(null, xiaoming.getUserId(), xiaoming.getUserName(), xiaoming.getAge(), 60);
             UserManager.insert(ming);
         }
 
         if (UserManager.queryUserIdOne("101") != null) {
-            User hua = new User(UserManager.queryUserIdOne("101").getId(), xiaohua.getUserId(), xiaohua.getUserName(), xiaohua.getAge());
+            User hua = new User(UserManager.queryUserIdOne("101").getId(), xiaohua.getUserId(), xiaohua.getUserName(), xiaohua.getAge(),60);
             UserManager.insertOrReplace(hua);
         }else {
-            User hua = new User(null, xiaohua.getUserId(), xiaohua.getUserName(), xiaohua.getAge());
+            User hua = new User(null, xiaohua.getUserId(), xiaohua.getUserName(), xiaohua.getAge(), 60);
             UserManager.insertOrReplace(hua);
         }
 
         if (UserManager.queryUserIdOne("102") != null) {
-            User hong = new User(UserManager.queryUserIdOne("102").getId(), xiaohong.getUserId(), xiaohong.getUserName(), xiaohong.getAge());
+            User hong = new User(UserManager.queryUserIdOne("102").getId(), xiaohong.getUserId(), xiaohong.getUserName(), xiaohong.getAge(), 60);
             UserManager.update(hong);
         }else {
-            User hong = new User(null, xiaohong.getUserId(), xiaohong.getUserName(), xiaohong.getAge());
+            User hong = new User(null, xiaohong.getUserId(), xiaohong.getUserName(), xiaohong.getAge(), 60);
             UserManager.insert(hong);
         }
     }

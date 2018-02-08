@@ -1,6 +1,7 @@
 package hjhtest.com.cncn.www.huangjhtest.greendao.db.helper;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import hjhtest.com.cncn.www.huangjhtest.greendao.db.DaoMaster;
 import hjhtest.com.cncn.www.huangjhtest.greendao.db.DaoSession;
@@ -11,18 +12,20 @@ import hjhtest.com.cncn.www.huangjhtest.greendao.db.DaoSession;
  */
 
 public class GreenDaoManager {
+    private static DaoOpenHelper mOpenHelper;
+    private static SQLiteDatabase db;
     private static DaoMaster mDaoMaster;
     private static DaoSession mDaoSession;
     private static volatile GreenDaoManager mInstance = null;
-    private static final String DB_NAME = "test05.db";
+    private static final String DB_NAME = "User.db";
 
     private GreenDaoManager() {
     }
 
     public static void init(Context context) {
-        DaoMaster.DevOpenHelper devOpenHelper = new
-                DaoMaster.DevOpenHelper(context, DB_NAME);
-        mDaoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
+        mOpenHelper = new DaoOpenHelper(context, DB_NAME, null);
+        db = mOpenHelper.getWritableDatabase();
+        mDaoMaster = new DaoMaster(db);
         mDaoSession = mDaoMaster.newSession();
     }
 
