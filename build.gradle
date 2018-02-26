@@ -22,6 +22,10 @@ buildscript {
 
         //greenDao
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
+
+        //美团多渠道 打包
+     classpath 'com.meituan.android.walle:plugin:1.1.6'
+
     }
 }
 
